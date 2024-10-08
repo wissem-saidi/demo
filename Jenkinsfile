@@ -13,7 +13,7 @@ pipeline {
     stages {
         stage('Git Checkout') {
             steps {
-                git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/wissem-saidi/Boardgame.git'
+                git branch: 'main', credentialsId: 'git-cred', url: 'https://github.com/wissem-saidi/demo.git'
             }
         }
         
@@ -78,7 +78,7 @@ pipeline {
         
         stage('Docker Image Scan') {
             steps {
-                sh "trivy image --format json -o trivy-image-report.json saidiwissem/boardshack:latest"
+                sh "trivy image --format json -o trivy-image-report.json saidiwissem/demo:latest"
             }
         }
         
@@ -86,7 +86,7 @@ pipeline {
             steps {
                 script {
                     withDockerRegistry(credentialsId: 'docker-cred', toolName: 'docker') {
-                        sh "docker push saidiwissem/boardshack:latest"
+                        sh "docker push saidiwissem/demo:latest"
                     }
                 }
             }
